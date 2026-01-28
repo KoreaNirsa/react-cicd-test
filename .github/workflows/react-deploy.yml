@@ -1,0 +1,40 @@
+name: React Deploy to S3 (OIDC)
+
+on:
+  push:
+    branches: [ "master" ]  
+
+permissions:
+  id-token: write  
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: frontend
+
+      - name: Build React
+        run: npm run build
+        working-directory: frontend
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::899899222496:role/GitHubActions-React-S3DeployRole
+          aws-region: us-east-1
+
+      - name: Deploy to S3
+        run: |
+          aws s3 sync frontend/build s3://korea-it-react-project --delete 
