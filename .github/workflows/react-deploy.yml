@@ -36,3 +36,12 @@ jobs:
       - name: Deploy to S3
         run: |
           aws s3 sync dist s3://korea-it-react-project --delete 
+
+      - name: Invalidate CloudFront Cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id E2663XEY0KGAD7 \
+            --paths "/*"
+
+
+
