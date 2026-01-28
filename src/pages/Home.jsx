@@ -12,7 +12,7 @@ function Home() {
         </p>
         <div className="card-grid">
           <Link to="/notice" className="card" style={{textDecoration: 'none', color: 'inherit'}}>
-            <h3>📢 공지사항 Test22</h3>
+            <h3>📢 공지사항</h3>
             <p style={{color: 'var(--text-secondary)'}}>최신 소식과 업데이트를 확인하세요</p>
           </Link>
           <Link to="/free" className="card" style={{textDecoration: 'none', color: 'inherit'}}>
